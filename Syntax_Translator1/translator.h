@@ -9,7 +9,7 @@
 class translator
 {
 public:
-	translator(std::istream& stream); // give stream to lex analyze
+	translator(std::istream& stream);
 	void printAtoms(std::ostream& stream);
 	void generateAtom(std::unique_ptr<Atom> atom);
 
@@ -29,7 +29,7 @@ public:
 
 	inline void lexCheck();
 
-private: // see grammar
+private: 
 	std::shared_ptr<RValue> E();
 	std::shared_ptr<RValue> E7();
 	std::shared_ptr<RValue> E7_(std::shared_ptr<RValue>);

@@ -101,7 +101,7 @@ std::shared_ptr<RValue> translator::E1() {
 	if (_currentLexem.type() == LexemType::num) {
 		auto q = std::make_shared<NumberOperand>(_currentLexem.value());
 		_currentLexem = _scanner.getNextToken();
-		return q; // 25
+		return q; 
 	}
 	if (_currentLexem.type() == LexemType::lpar) {
 		_currentLexem = _scanner.getNextToken();
@@ -109,12 +109,12 @@ std::shared_ptr<RValue> translator::E1() {
 		lexCheck();
 		if (_currentLexem.type() != LexemType::rpar) syntaxError("Not enought ')'");
 		_currentLexem = _scanner.getNextToken();
-		return q; // 24
+		return q; 
 	}
 	if (_currentLexem.type() == LexemType::chr) {
 		auto q = std::make_shared<NumberOperand>(_currentLexem.value());
 		_currentLexem = _scanner.getNextToken();
-		return q; // 26
+		return q; 
 	}
 	if (_currentLexem.type() == LexemType::opinc) {
 		_currentLexem = _scanner.getNextToken();
@@ -124,7 +124,7 @@ std::shared_ptr<RValue> translator::E1() {
 		generateAtom(std::make_unique<BinaryOpAtom>("ADD", p, one, std::dynamic_pointer_cast<MemoryOperand>(p)));
 		_currentLexem = _scanner.getNextToken();
 		lexCheck();
-		return p; // 29
+		return p; 
 	}
 	if (_currentLexem.type() == LexemType::id) {
 		auto r = _symbolTable.add(_currentLexem.str());
@@ -133,7 +133,7 @@ std::shared_ptr<RValue> translator::E1() {
 	}
 }
 
-std::shared_ptr<RValue> translator::E1_(std::shared_ptr<RValue> p) { // e ++
+std::shared_ptr<RValue> translator::E1_(std::shared_ptr<RValue> p) { 
 	lexCheck();
 	if (_currentLexem.type() == LexemType::opinc) {
 		_currentLexem = _scanner.getNextToken();
@@ -141,14 +141,14 @@ std::shared_ptr<RValue> translator::E1_(std::shared_ptr<RValue> p) { // e ++
 		auto one = std::make_shared<NumberOperand>(1);
 		generateAtom(std::make_unique<UnaryOpAtom>("MOV", p, r));
 		generateAtom(std::make_unique<BinaryOpAtom>("ADD", p, one, std::dynamic_pointer_cast<MemoryOperand>(p)));
-		return r; // 29
+		return r; 
 	}
-	return p; // 31
+	return p; 
 }
 
 std::shared_ptr<RValue> translator::E3() {
 	auto q = E2();
-	return E3_(q); // 19
+	return E3_(q); 
 }
 
 std::shared_ptr<RValue> translator::E3_(std::shared_ptr<RValue> p) {
@@ -159,8 +159,8 @@ std::shared_ptr<RValue> translator::E3_(std::shared_ptr<RValue> p) {
 		auto s = _symbolTable.alloc();
 		generateAtom(std::make_unique<BinaryOpAtom>("MUL", p, r, s));
 		return E3_(s);
-	} // 20
-	return p; // 21
+	} 
+	return p;
 }
 
 std::shared_ptr<RValue> translator::E5() {
@@ -185,9 +185,9 @@ std::shared_ptr<RValue> translator::E5_(std::shared_ptr<RValue> p) {
 		generateAtom(std::make_unique<ConditionalJumpAtom>(jumps[type], p, r, l));
 		generateAtom(std::make_unique<UnaryOpAtom>("MOV", zero, s));
 		generateAtom(std::make_unique<LabelAtom>(l));
-		return s; // 13
+		return s; 
 	}
-	return p; // 14
+	return p; 
 }
 
 std::shared_ptr<RValue> translator::E2() {

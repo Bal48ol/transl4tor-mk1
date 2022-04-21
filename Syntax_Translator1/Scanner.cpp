@@ -76,7 +76,7 @@ Token Scanner::getNextToken()
 		return Token(LexemType::id, Word);
 	}
 	else if (stream.peek() == '\"') {
-		stream.get(); // "
+		stream.get(); 
 		return getString(stream);
 	}
 	else if (stream.peek() == '\'') {
